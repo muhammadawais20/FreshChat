@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App</title>
+    <link rel="stylesheet" href="iparams.css">
+    <link rel="stylesheet" type="text/css" href="https://static.freshdev.io/fdk/2.0/assets/freshchat.css">
+    <script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="./assets/iparams.css">
+</head>
+
+<body>
+
+    <style>
+        .header {
+            color: cadetblue;
+            margin-left: 20px;
+        }
+
+        .domain,
+        .email,
+        .password,
+        .buttonlogin,
+        .token,
+        .button {
+            width: 30vw;
+            margin: 20px;
+        }
+
+        .buttonlogin {
+            text-align: center;
+
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+        }
+
+        #login-successful,
+        #token-successful {
+            color: green;
+            margin-left: 20px;
+        }
+
+        #login-failed,
+        #token-failed {
+            color: red;
+            margin-left: 20px;
+        }
+    </style>
+
+    <!-- Login Page-->
+    <div class="container-login">
+
+        <h1 class="header">Fresh Chat App</h1>
+
+        <div class="domain">
+            <input type="text" placeholder="Enter Domain" id="form-domain">
+        </div>
+
+        <div class="email">
+            <input type="email" placeholder="Enter Email" id="form-email">
+        </div>
+
+        <div class="password">
+            <input type="password" id="form-password" placeholder="Enter Password">
+        </div>
+
+        <div class="buttonlogin">
+            <button id="login-button" type="submit" onclick="loginform()">Login</button>
+        </div>
+
+        <p id="login-successful" style="display: none;">Login Successful!</p>
+
+        <p id="login-failed" style="display: none;">Login Failed!</p>
+    </div>
+
+    <!--Token Page-->
+    <div class="container-token">
+        <div class="token">
+            <input type="text" placeholder="Enter Token" id="form-token" style="display: none;">
+        </div>
+
+        <div class="button">
+            <button id="token-button" type="submit" style="display: none;" onclick="tokenvalidation()">Submit</button>
+        </div>
+
+        <p id="token-successful" style="display: none;">Token Verified!</p>
+
+        <p id="token-failed" style="display: none;">Token Not Correct!</p>
+    </div>
+    <script>
+
+        let EMAIL = null;
+        let PASSWORD = null;
+        let DOMAIN = null;
+        let TOKEN = null;
+
+        /*Login Page Variables*/
+        var domain = document.getElementById("form-domain");
+        var email = document.getElementById("form-email");
+        var password = document.getElementById("form-password");
+        var loginbutton = document.getElementById("login-button");
+        var loginsuccessful = document.getElementById("login-successful");
+        var loginfailed = document.getElementById("login-failed");
+
+        /*Token Page Variables*/
+        var token = document.getElementById("form-token");
+        var tokenbutton = document.getElementById("token-button");
+        var tokenverified = document.getElementById("token-successful");
+        var tokenfailed = document.getElementById("token-failed");
+
+
+        /* Login Form Function*/
+        function loginform() {
+            if (domain.value == "xyz.com" && email.value == "xyz@gmail.com" && password.value == 123) {
+
+                loginsuccessful.style.display = "block";
+                domain.style.display = "none";
+                email.style.display = "none";
+                password.style.display = "none";
+                loginbutton.style.display = "none";
+                EMAIL = email.value;
+                PASSWORD = password.value;
+                DOMAIN = domain.value;
+
+                loginfailed.style.display = "none";
+                token.style.display = "block";
+                tokenbutton.style.display = "block";
+            }
+
+            else {
+                loginfailed.style.display = "block";
+            }
+        }
+
+        /* Token Validation Function*/
+
+        function tokenvalidation() {
+            if (token.value == 123) {
+                TOKEN = token.value;
+                tokenverified.style.display = "block";
+                loginsuccessful.style.display = "none";
+                tokenfailed.style.display = "none";
+            }
+
+            else {
+                tokenfailed.style.display = "block";
+                tokenverified.style.display = "none";
+                loginsuccessful.style.display = "none";
+            }
+        }
+        function validate() {
+            if (EMAIL && PASSWORD && TOKEN) {
+                return true;
+            }
+            return false;
+        }
+        function postConfigs() {
+
+            return {
+                __meta: {
+                    secure: [TOKEN, PASSWORD]
+                },
+                EMAIL,
+                PASSWORD,
+                DOMAIN,
+                TOKEN
+            }
+        }
+        function getConfigs(configs) {
+            console.log(configs);
+        }
+    </script>
+    </script>
+</body>
+
+</html>
