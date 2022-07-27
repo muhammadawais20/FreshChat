@@ -13,6 +13,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="./assets/iparams.css">
+    <script type="module" src="https://unpkg.com/@freshworks/crayons@v3/dist/crayons/crayons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/@freshworks/crayons@v3/dist/crayons/crayons.js"></script>
+
 </head>
 
 <body>
@@ -58,6 +61,8 @@
 
     <!-- Login Page-->
     <div class="container-login">
+        <fw-toast id="type_toast_success" position="top-right"></fw-toast>
+        <fw-toast id="type_toast_failed" position="top-right"></fw-toast>
 
         <h1 class="header">Fresh Chat App</h1>
 
@@ -127,6 +132,7 @@
                 email.style.display = "none";
                 password.style.display = "none";
                 loginbutton.style.display = "none";
+
                 EMAIL = email.value;
                 PASSWORD = password.value;
                 DOMAIN = domain.value;
@@ -134,10 +140,14 @@
                 loginfailed.style.display = "none";
                 token.style.display = "block";
                 tokenbutton.style.display = "block";
+
+                successToaster();
             }
 
             else {
                 loginfailed.style.display = "block";
+
+                unsuccessfulToaster();
             }
         }
 
@@ -145,16 +155,21 @@
 
         function tokenvalidation() {
             if (token.value == 123) {
+                
                 TOKEN = token.value;
                 tokenverified.style.display = "block";
                 loginsuccessful.style.display = "none";
                 tokenfailed.style.display = "none";
+
+                successToaster();
             }
 
             else {
                 tokenfailed.style.display = "block";
                 tokenverified.style.display = "none";
                 loginsuccessful.style.display = "none";
+
+                unsuccessfulToaster();
             }
         }
         function validate() {
@@ -178,8 +193,15 @@
         function getConfigs(configs) {
             console.log(configs);
         }
+        function successToaster() {
+            document.querySelector('#type_toast_success').trigger({ type: 'success', content: 'Successfull!', timeout:"3000" })
+        }
+
+        function unsuccessfulToaster() {
+            document.querySelector('#type_toast_failed').trigger({ type: 'failed', content: 'Failed!', timeout:"3000" })
+        }
+
     </script>
     </script>
 </body>
-
 </html>
